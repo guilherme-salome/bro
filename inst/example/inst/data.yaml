@@ -1,4 +1,0 @@
-costs:
-  type: csv
-  path: ['data', 'base', 'costs.csv']
-

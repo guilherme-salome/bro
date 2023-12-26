@@ -1,0 +1,6 @@
+# data.yaml: lists all data used and created by your project
+
+costs:
+  type: csv
+  path: ['data', 'base', 'costs.csv']
+

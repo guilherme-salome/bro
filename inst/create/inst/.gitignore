@@ -1,0 +1,3 @@
+# Ignore credentials by default
+credentials.yaml
+credentials.yml
