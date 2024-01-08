@@ -11,13 +11,14 @@
 #' is sourced.
 #'
 #' @param path The file path to the script containing nodes and other objects (default: "R/nodes.R").
+#' @param execution An optional execution environment to use; if not provided, a new environment is created.
 #'
 #' @return Returns the objects with the 'node' class loaded from the specified script file.
 #'
-load_nodes <- function(path = file.path("R", "nodes.R")) {
+load_nodes <- function(path = file.path("R", "nodes.R"), execution = new.env()) {
   ## Load nodes and possibly other objects, including functions, into a separate environment
-  objects <- new.env()
-  source(path, chdir = TRUE, local = objects)
+  execution$nodes = new.env()
+  source(path, chdir = TRUE, local = execution$nodes)
   ## Select only objects with 'node' class
-  return(get("__nodes__", envir = objects))
+  return(get("__nodes__", envir = execution$nodes))
 }
