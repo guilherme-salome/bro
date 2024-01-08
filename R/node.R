@@ -17,7 +17,7 @@
 #'
 #' @return Returns a node, which is a named list with components representing the function, inputs, outputs, and name.
 #'
-node <- function(f, x = NULL, y = NULL, name = deparse(substitute(f))) {
+node <- function(f, x = NULL, y = NULL, name = deparse(substitute(f)), env = parent.frame()) {
   ## Validate inputs for node
   stopifnot(is.function(f))
   stopifnot(is.null(x) || is.character(x))
@@ -33,5 +33,12 @@ node <- function(f, x = NULL, y = NULL, name = deparse(substitute(f))) {
     ),
     class = "node"
   )
+  ## Assign node to nodes list
+  if(exists("__nodes__", envir = env)) {
+    nodes <- get("__nodes__", envir = env)
+  } else {
+    nodes <- list()
+  }
+  assign("__nodes__", c(nodes, list(node)), envir = env)
   return(node)
 }
