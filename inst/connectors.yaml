@@ -1,0 +1,9 @@
+# Defines functions used to load and save data
+
+rds:
+  load: base::readRDS
+  save: base::saveRDS
+
+csv:
+  load: readr::read_csv
+  save: readr::write_csv
