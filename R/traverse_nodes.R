@@ -17,7 +17,7 @@
 #'
 traverse_nodes <- function(nodes) {
   ## Create dependency matrix
-  nodes_names <- names(nodes)
+  nodes_names <- sapply(nodes, function(node) {return(node$name)})
   dependencies <- matrix(
     data = 0,
     nrow = length(nodes),
@@ -25,14 +25,14 @@ traverse_nodes <- function(nodes) {
     dimnames = list(nodes_names, nodes_names)
   )
   ## Traverse all nodes to fill matrix
-  for(node in nodes_names) {
-    for(other in nodes_names) {
+  for(node in nodes) {
+    for(other in nodes) {
       ## Skip itself
-      if(node == other) {
+      if(node$name == other$name) {
         next
       }
       ## Node A depends on Node B if one of A's inputs is one of B's outputs
-      dependencies[node, other] = ifelse(any(nodes[[node]]$x %in% nodes[[other]]$y), 1, 0)
+      dependencies[node$name, other$name] = ifelse(any(node$x %in% other$y), 1, 0)
     }
   }
   return(dependencies)
